@@ -2,15 +2,12 @@ import nflgame as nfl
 from pandas import Series, DataFrame
 import pandas as pd
 
-
-
 y = range(2013,2014)
 gametype = ['PRE', 'REG','POST']
 home_away_iter = ['HOME','AWAY']
 
 def raw_nfl_data_df():
     data = []
-
     print "%s, %s, %s, %s, %s, %s, %s, %s" % ( "season","week","REG_POST","home","home_score",
         "away", "away_score", "home_score_margin")
     for s in y:
@@ -27,13 +24,11 @@ def raw_nfl_data_df():
                             row['score_away'] = g.score_away
                             row['score_home_margin'] = g.score_home-g.score_away
                             data.append(row)
-
 ##    print data
     df = DataFrame(data,columns=['season','week','gametype','home_team','score_home','away_team','score_away','score_home_margin'])
     return df
 
 def raw_nfl_data_out():
-
     print "%s,%s,%s,%s,%s,%s,%s,%s" % ( "season","week","gametype","home","home_score","away","away_score","home_score_margin" )
     for s in y:
             for k in gametype:
@@ -41,11 +36,9 @@ def raw_nfl_data_out():
                     for g in games:
                         print "%i, %i, %s, %s, %i, %s, %i, %i" % (g.season(), g.schedule['week'],k ,g.home,g.score_home,g.away,g.score_away,g.score_home-g.score_away)
 
-
 def raw_nfl_data_xtab_out():
     cols = ["season","week","gametype","team","team_home_flag"
                                         ,"oppnt","oppnt_away_flag","team_score","oppnt_score","team_win_flag"]
-
     print "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s" % tuple(cols)
     # print "%s, %s, %s,%s,%s,%s,%s,%s,%s,%s" % ( "season","week","gametype","team","team_home_flag"
     #                                     ,"oppnt","oppnt_away_flag","team_score","oppnt_score","team_win_flag")
@@ -63,7 +56,6 @@ def raw_nfl_data_xtab_out():
 
 def raw_nfl_data_xtab_df():
     data = []
-
     teams = ['NYJ']  # [v[0] for v in nfl.teams]
     for team in teams:
         for s in y:
@@ -86,7 +78,6 @@ def raw_nfl_data_xtab_df():
                                     row['oppnt_score'] = g.score_away
                                     row['team_win'] = (g.score_home > g.score_away) * 1
                                     row['team_lose'] = (g.score_home < g.score_away) * 1
-
                                 else:
                                     row['eid'] = g.eid
                                     row['season'] = g.season()
@@ -101,16 +92,11 @@ def raw_nfl_data_xtab_df():
                                     row['team_win'] = (g.score_away > g.score_home) * 1
                                     row['team_lose'] = (g.score_away < g.score_home) * 1
                                 data.append(row)
-
                     except:
                         pass
                         #  print 'no games for ', s, team, k
-
     df = DataFrame(data,columns=['eid', 'season','week','gametype','team','team_home_flag',
                                  'oppnt', 'oppnt_away_flag','team_score','oppnt_score','team_win','team_lose'])
-
-
-
     return df
 
 def team_data(df):
@@ -134,10 +120,8 @@ def team_data(df):
 
 def main():
     df = raw_nfl_data_xtab_df()
-
 #    df = df.reindex(index=['team', 'eid'])
     team_data(df)
 
 if __name__ == "__main__":
     main()
-
